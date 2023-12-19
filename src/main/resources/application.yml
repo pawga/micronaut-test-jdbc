@@ -1,0 +1,9 @@
+micronaut:
+  application:
+    name: test-jdbc-demo
+datasources:
+  default:
+    driver-class-name: org.postgresql.Driver
+    db-type: postgres
+    schema-generate: NONE
+    dialect: POSTGRES
