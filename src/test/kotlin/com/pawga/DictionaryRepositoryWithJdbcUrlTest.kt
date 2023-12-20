@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.sql.Connection
 
@@ -33,74 +32,50 @@ internal class DictionaryRepositoryWithJdbcUrlTest {
     var resourceLoader: ResourceLoader? = null
 
     @Test
-    fun shouldGetAllProducts(dictionaryRepository: DictionaryRepository) {
+    fun `test Repository`(dictionaryRepository: DictionaryRepository) {
+
+        // test size
         runBlocking {
             launch(Dispatchers.IO) {
                 val size = dictionaryRepository.findAll().count()
                 Assertions.assertEquals(4, size)
-
-                //        // test create and update
-                runBlocking {
-                    val rec1 = dictionaryRepository.save(DictionaryDb(null, NEW_NAME))
-                    log.info("${rec1.id}")
-                    val rec2 = dictionaryRepository.save(DictionaryDb(null, "Wwwww"))
-                    log.info("${rec2.id}")
-                }
             }
         }
-    }
 
-//    @Test
-//    fun `test Repository`(dictionaryRepository: DictionaryRepository) {
-//        val id = NEW_ID
-//
-//        // test size
-//        runBlocking {
-//            launch(Dispatchers.IO) {
-//                val size = dictionaryRepository.findAll().count()
-//                Assertions.assertEquals(4, size)
-//            }
-//        }
-//
-//        // test uniq field
-//        val product = DictionaryDb(id, "Источник дохода")
-//        runBlocking {
-//            launch(Dispatchers.IO) {
-//                try {
-//                    dictionaryRepository.save(product)
-//                } catch (e: Exception) {
-//                    log.debug("This is normal")
-//                }
-//            }
-//            val optionalProduct = dictionaryRepository.findById(id)
-//            Assertions.assertTrue(optionalProduct == null)
-//        }
-//
-//        // test create and update
-//        val dictionaryDb = DictionaryDb(id, NEW_NAME)
-//        runBlocking {
-//            dictionaryRepository.save(dictionaryDb)
-//            val newDictionary = dictionaryRepository.findById(id)
-//            Assertions.assertTrue(newDictionary != null)
-//            val updateRecord = DictionaryDb(id, UPDATE_NAME)
-//            dictionaryRepository.update(updateRecord)
-//            val findDictionary = dictionaryRepository.findById(id)
-//            Assertions.assertTrue(findDictionary?.name == UPDATE_NAME)
-//        }
-//
-//        // test delete by id
-//        val dictionaryDb2 = DictionaryDb(id, NEW_NAME)
-//        runBlocking {
-//            dictionaryRepository.deleteById(id)
-//            val findDictionary = dictionaryRepository.findById(id)
-//            Assertions.assertTrue(findDictionary == null)
-//        }
-//    }
+        // test uniq field
+        val product = DictionaryDb("Источник дохода")
+        runBlocking {
+            launch(Dispatchers.IO) {
+                try {
+                    dictionaryRepository.save(product)
+                } catch (e: Exception) {
+                    log.debug("This is normal")
+                }
+            }
+            val optionalProduct = dictionaryRepository.findById(1L)
+            Assertions.assertTrue(optionalProduct != null)
+        }
+
+        // test create and update
+        val dictionaryDb = DictionaryDb(NEW_NAME)
+        runBlocking {
+            val id = dictionaryRepository.create(dictionaryDb)
+            val newDictionary = dictionaryRepository.findById(id)
+            Assertions.assertTrue(newDictionary != null)
+            val updateRecord = DictionaryDb(id, UPDATE_NAME)
+            dictionaryRepository.update(updateRecord)
+            val findDictionary = dictionaryRepository.findById(id)
+            Assertions.assertTrue(findDictionary?.name == UPDATE_NAME)
+
+            dictionaryRepository.deleteById(id)
+            val deletedDictionary = dictionaryRepository.findById(id)
+            Assertions.assertTrue(deletedDictionary == null)
+        }
+    }
 
     companion object {
         private val log = LoggerFactory.getLogger(DictionaryRepositoryWithJdbcUrlTest::class.java)
         const val NEW_NAME = "Test value"
         const val UPDATE_NAME = "Changed value"
-        const val NEW_ID = 7L
     }
 }

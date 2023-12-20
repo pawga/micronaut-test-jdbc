@@ -1,6 +1,5 @@
 package com.pawga
 
-import io.micronaut.core.io.ResourceLoader
 import io.micronaut.test.annotation.Sql
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import jakarta.inject.Inject
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.sql.Connection
 
 @MicronautTest(startApplication = false) // <1>
 @Sql(scripts = ["classpath:sql/init-db-2.sql", "classpath:sql/seed-data-2.sql"], phase = Sql.Phase.BEFORE_EACH)
@@ -43,7 +41,7 @@ internal class DictionaryRepositoryTest {
         runBlocking {
             launch(Dispatchers.IO) {
                 try {
-                    dictionaryRepository.save(product)
+                    dictionaryRepository.create(product)
                 } catch (e: Exception) {
                     log.debug("This is normal")
                 }
@@ -55,7 +53,7 @@ internal class DictionaryRepositoryTest {
         // test create and update
         val dictionaryDb = DictionaryDb(id, NEW_NAME)
         runBlocking {
-            dictionaryRepository.save(dictionaryDb)
+            dictionaryRepository.create(dictionaryDb)
             val newDictionary = dictionaryRepository.findById(id)
             Assertions.assertTrue(newDictionary != null)
             val updateRecord = DictionaryDb(id, UPDATE_NAME)

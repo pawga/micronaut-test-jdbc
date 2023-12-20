@@ -1,8 +1,8 @@
-INSERT INTO "dictionary" (id, name)
-VALUES (1, 'Источник дохода'),
-       (2, 'Источник кредита'),
-       (3, 'Качество клиентских документов'),
-       (4, 'Особый статус рода деятельности');
+INSERT INTO "dictionary" (name)
+VALUES ('Источник дохода'),
+       ('Источник кредита'),
+       ('Качество клиентских документов'),
+       ('Особый статус рода деятельности');
 --
 -- INSERT INTO dictionary_value (code, value, dictionary_id)
 -- VALUES ('Employment', 'Работа по найму', 1),

@@ -15,26 +15,14 @@ abstract class DictionaryRepository :
     CoroutineCrudRepository<DictionaryDb, Long>,
     CoroutineJpaSpecificationExecutor<DictionaryDb> {
 
-    // <2>
-    fun save(dictionary: DictionaryDb): DictionaryDb {
-        return createProductIfNotExists(dictionary.name)
+    suspend fun create(dictionary: DictionaryDb): Long {
+        return if (dictionary.id != null) {
+            save(dictionary).id ?: 0L
+        } else {
+            createProductIfNotExists(dictionary.name)
+        }
     }
 
-    @Query(
-        value = "insert into dictionary(name) values(:name) ON CONFLICT DO NOTHING",
-        nativeQuery = true
-    )
-    abstract fun createProductIfNotExists(name: String): DictionaryDb
-
-//    abstract fun save(
-//        dictionary: DictionaryDb,
-//    ): DictionaryDb
-//
-//    @Transactional
-//    open fun saveWithException(
-//        dictionary: DictionaryDb,
-//    ): DictionaryDb {
-//        save(dictionary)
-//        throw DataAccessException("test exception")
-//    }
+    @Query("insert into dictionary(name) values(:name) RETURNING id;")
+    abstract fun createProductIfNotExists(name: String): Long
 }

@@ -15,4 +15,6 @@ data class DictionaryDb(
     @Id
     val id: Long? = null,
     val name: String,
-)
+) {
+    constructor(name: String) : this(id = null, name = name)
+}
