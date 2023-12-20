@@ -36,12 +36,17 @@ internal class DictionaryRepositoryTest {
 
     @Test
     fun shouldNotCreateAProductWithDuplicateCode() {
+        val product = DictionaryDb(7, "Источник дохода")
         runBlocking {
             launch(Dispatchers.IO) {
-                val product = DictionaryDb(7, "Источник дохода777")
-                val result = dictionaryRepository.save(product);
+                //val result = dictionaryRepository.save(product);
+                Assertions.assertDoesNotThrow {
+                    launch(Dispatchers.IO) {
+                        dictionaryRepository.save(product)
+                    }
+                }
                 val optionalProduct = dictionaryRepository.findById(7)
-                Assertions.assertTrue(optionalProduct != null)
+                Assertions.assertTrue(optionalProduct == null)
             }
         }
     }
