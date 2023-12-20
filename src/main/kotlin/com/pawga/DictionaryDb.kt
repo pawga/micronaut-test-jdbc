@@ -3,8 +3,6 @@ package com.pawga
 import io.micronaut.data.annotation.GeneratedValue
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
-import io.micronaut.data.annotation.Relation
-import io.micronaut.data.annotation.Relation.Cascade
 import io.micronaut.serde.annotation.Serdeable
 
 /**
@@ -15,7 +13,7 @@ import io.micronaut.serde.annotation.Serdeable
 @MappedEntity(value = "dictionary")
 data class DictionaryDb(
     @Id
-//    @GeneratedValue
-    val id: Long,
+    //@GeneratedValue
+    val id: Long? = null,
     val name: String,
 )

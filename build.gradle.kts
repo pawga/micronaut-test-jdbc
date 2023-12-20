@@ -25,6 +25,7 @@ dependencies {
     // javaee/jakarta ee spec
     implementation("jakarta.annotation:jakarta.annotation-api:2.1.1")
     implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
+    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
 
     implementation("io.micronaut.data:micronaut-data-jdbc")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
