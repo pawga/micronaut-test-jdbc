@@ -7,3 +7,6 @@ datasources:
     db-type: postgres
     schema-generate: NONE
     dialect: POSTGRES
+    url: r2dbc:postgresql://localhost:5432/r2-dictionary
+    username: postgres
+    password: ZSE4zse4
