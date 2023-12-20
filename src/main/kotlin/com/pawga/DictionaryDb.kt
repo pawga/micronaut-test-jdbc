@@ -11,19 +11,11 @@ import io.micronaut.serde.annotation.Serdeable
  * Created by sivannikov
  */
 
-//@Serdeable
-//@MappedEntity(value = "dictionary")
-//data class DictionaryDb(
-//    @Id
-////    @GeneratedValue
-//    val id: Long? = null,
-//    val name: String,
-//)
-
-@MappedEntity("dictionary")
+@Serdeable
+@MappedEntity(value = "dictionary")
 data class DictionaryDb(
-    @Id // <2>
-    val id: Long,
-    val name: String
+    @Id
+    @GeneratedValue
+    val id: Long? = null,
+    val name: String,
 )
-

@@ -13,7 +13,8 @@ import jakarta.transaction.Transactional
 
 @JdbcRepository(dialect = Dialect.POSTGRES)
 abstract class DictionaryRepository :
-    CoroutineCrudRepository<DictionaryDb, Long> {
+    CoroutineCrudRepository<DictionaryDb, Long>,
+    CoroutineJpaSpecificationExecutor<DictionaryDb> {
 //    abstract fun save(
 //        dictionary: DictionaryDb,
 //    ): DictionaryDb

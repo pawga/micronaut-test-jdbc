@@ -4,6 +4,9 @@ import io.micronaut.core.io.ResourceLoader
 import io.micronaut.test.annotation.Sql
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import jakarta.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.sql.Connection
