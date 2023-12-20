@@ -40,4 +40,6 @@
 
 - [Micronaut Hikari JDBC Connection Pool documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc)
 
-
+## Комментарии
+The test-resources option when configured to a real DBMS does not work.
+The workaround is to comment out the configuration in resources/application.yml
