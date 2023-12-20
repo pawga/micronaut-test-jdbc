@@ -43,19 +43,10 @@ internal class DictionaryRepositoryTest {
         val product = DictionaryDb(7, "Источник дохода")
         runBlocking {
             launch(Dispatchers.IO) {
-                //val result = dictionaryRepository.save(product);
-
-//                Assertions.assertDoesNotThrow {
-//                    launch(Dispatchers.IO) {
-//                        dictionaryRepository.save(product)
-//                    }
-//                }
-                launch(Dispatchers.IO) {
-                    try {
-                        dictionaryRepository.save(product)
-                    } catch (e: Exception) {
-                        log.debug("This is normal")
-                    }
+                try {
+                    dictionaryRepository.save(product)
+                } catch (e: Exception) {
+                    log.debug("This is normal")
                 }
             }
             val optionalProduct = dictionaryRepository.findById(7)
