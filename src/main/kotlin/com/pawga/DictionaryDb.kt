@@ -13,7 +13,6 @@ import io.micronaut.serde.annotation.Serdeable
 @MappedEntity(value = "dictionary")
 data class DictionaryDb(
     @Id
-//    @GeneratedValue
     val id: Long? = null,
     val name: String,
 )
